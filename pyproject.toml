@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "darkmine-data-mcp"
+version = "0.1.0"
+description = "Read-only MCP wrapper for the Darkmine raw data API."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Darkmine" }
+]
+dependencies = [
+  "httpx>=0.27.0",
+  "mcp>=1.2.0",
+  "pydantic>=2.7.0",
+]
+
+[project.scripts]
+darkmine-data-mcp = "darkmine_data_mcp.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "pytest-asyncio>=0.23.0",
+  "respx>=0.21.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
