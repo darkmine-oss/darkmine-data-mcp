@@ -43,6 +43,36 @@ def test_scoped_tools_require_selectors():
 
 
 @pytest.mark.asyncio
+async def test_data_license_calls_license_route(monkeypatch):
+    calls = []
+
+    class FakeClient:
+        def __init__(self, config):
+            self.config = config
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            return None
+
+        async def get(self, path, params=None):
+            calls.append((path, params))
+            return {
+                "data": {"license": {"spdx_id": "CC-BY-4.0"}},
+                "usage": {},
+            }
+
+    monkeypatch.setenv("DARKMINE_DATA_API_KEY", "dm_test")
+    monkeypatch.setattr(server, "DarkmineClient", FakeClient)
+
+    result = await server.data_license()
+
+    assert result["data"]["license"]["spdx_id"] == "CC-BY-4.0"
+    assert calls == [("/v1/raw/gswa/data-license", {})]
+
+
+@pytest.mark.asyncio
 async def test_gswa_query_table_maps_bbox_to_rows_params(monkeypatch):
     calls = []
 

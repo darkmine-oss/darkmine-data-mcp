@@ -56,8 +56,9 @@ export DARKMINE_DATA_MAX_RECORDS=1000
 
 ## Tools
 
-All tools are prefixed with `gswa_` so future MCP tools can add other data collections without ambiguity.
+GSWA data access tools are prefixed with `gswa_` so future MCP tools can add other data collections without ambiguity. The `data_license` tool returns licence and attribution metadata for the data exposed by this server.
 
+- `data_license`: return licence, attribution, source, and modification-notice requirements for Darkmine-served data.
 - `gswa_list_tables`: list raw GSWA tables and supported query methods.
 - `gswa_describe_table`: return schema, columns, relationships, and supported filters for one table.
 - `gswa_query_table`: bounded generic access to `GET /v1/raw/gswa/tables/{table_name}/rows`.

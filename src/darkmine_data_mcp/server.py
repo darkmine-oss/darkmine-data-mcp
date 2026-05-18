@@ -31,6 +31,7 @@ from .models import (
 mcp = FastMCP("darkmine")
 
 RAW_GSWA_PREFIX = "/v1/raw/gswa"
+DATA_LICENSE_PATH = f"{RAW_GSWA_PREFIX}/data-license"
 
 
 def _parse_model(model_cls: type[Any], values: dict[str, Any]) -> Any:
@@ -92,6 +93,12 @@ async def _query_table(table_name: str, params: dict[str, Any]) -> dict[str, Any
 async def gswa_list_tables() -> dict[str, Any]:
     """List raw GSWA tables and the filters each table supports."""
     return await _call_get(f"{RAW_GSWA_PREFIX}/tables")
+
+
+@mcp.tool()
+async def data_license() -> dict[str, Any]:
+    """Return licence, attribution, and source notices for Darkmine-served data."""
+    return await _call_get(DATA_LICENSE_PATH)
 
 
 @mcp.tool()
