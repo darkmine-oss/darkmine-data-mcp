@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "darkmine": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "darkmine_data_mcp"],
+      "env": {
+        "DARKMINE_DATA_API_KEY": "${DARKMINE_DATA_API_KEY}",
+        "DARKMINE_DATA_BASE_URL": "${DARKMINE_DATA_BASE_URL}"
+      }
+    }
+  }
+}

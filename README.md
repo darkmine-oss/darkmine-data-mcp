@@ -37,7 +37,11 @@ export DARKMINE_DATA_TIMEOUT_SECONDS=30
 export DARKMINE_DATA_MAX_RECORDS=1000
 ```
 
-## Claude Desktop Config
+## Adding the MCP Server
+
+### Claude Desktop
+
+Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
 ```json
 {
@@ -47,12 +51,41 @@ export DARKMINE_DATA_MAX_RECORDS=1000
       "args": ["darkmine-data-mcp"],
       "env": {
         "DARKMINE_DATA_API_KEY": "dm_xxx",
-        "DARKMINE_DATA_BASE_URL": "https://coming soon"
+        "DARKMINE_DATA_BASE_URL": "https://coming-soon"
       }
     }
   }
 }
 ```
+
+Restart Claude Desktop.
+
+### Claude Code
+
+This repo ships a project-scoped `.mcp.json`. From inside a clone of this repo, export your key and start Claude Code:
+
+```bash
+export DARKMINE_DATA_API_KEY=dm_xxx
+export DARKMINE_DATA_BASE_URL=https://coming-soon
+claude
+```
+
+Claude Code will prompt to approve the project MCP server on first run.
+
+To register it globally (works in any directory) using the published package:
+
+```bash
+claude mcp add darkmine -s user \
+  -e DARKMINE_DATA_API_KEY=dm_xxx \
+  -e DARKMINE_DATA_BASE_URL=https://coming-soon \
+  -- uvx darkmine-data-mcp
+```
+
+Verify with `claude mcp list`.
+
+### claude.ai
+
+claude.ai connectors require a remote HTTPS MCP endpoint. This server is a local stdio server and cannot be added to claude.ai directly. A hosted remote variant is coming in future — see the Darkmine docs.
 
 ## Tools
 
